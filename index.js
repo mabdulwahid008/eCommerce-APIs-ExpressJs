@@ -14,6 +14,8 @@ app.use(express.json())
 app.use('/product', require('./routes/product.js'));
 app.use('/category', require('./routes/category.js'));
 app.use('/account', require('./routes/account.js'));
+app.use('/order', require('./routes/order.js'));
+app.use('/review', require('./routes/review.js'));
 
 
 app.listen(process.env.PORT, ()=>{

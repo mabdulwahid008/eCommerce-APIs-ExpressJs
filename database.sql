@@ -32,6 +32,7 @@ CREATE TABLE productImg(
     p_img4 BYTEA NULL,
     FOREIGN KEY (p_id) REFERENCES products(p_id) ON DELETE CASCADE
 );
+
 CREATE TABLE account (
     a_id SERIAL PRIMARY KEY,
     a_name VARCHAR(50) NOT NULL,
@@ -41,13 +42,23 @@ CREATE TABLE account (
     a_email VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE customer (
+	c_id SERIAL PRIMARY KEY,
+	c_name VARCHAR(50) NOT NULL,
+	c_phone VARCHAR(20) NOT NULL,
+	c_email VARCHAR(50) NOT NULL,
+	c_country VARCHAR(30) NOT NULL,
+	c_city VARCHAR(30) NOT NULL,
+	c_street VARCHAR(200) NOT NULL
+    a_id INT NOT NULL,
+    FOREIGN KEY (a_id) REFERENCES account(a_id)
+)
+
 CREATE TABLE orders (
     o_id SERIAL PRIMARY KEY,
     o_status VARCHAR(20) DEFAULT 'PENDING' NOT NULL,
     c_id INT NOT NULL,
-    a_d INT NOT NULL,
-    FOREIGN KEY (c_id) REFERENCES customer(c_id),
-    FOREIGN KEY (a_id) REFERENCES account(a_id)
+    FOREIGN KEY (c_id) REFERENCES customer(c_id)
 ); 
 
 CREATE TABLE orderDetail (
@@ -59,15 +70,12 @@ CREATE TABLE orderDetail (
     FOREIGN KEY (o_id) REFERENCES orders(o_id)
 );
 
-
 CREATE TABLE review (
     r_id SERIAL PRIMARY KEY,
     p_id INT NOT NULL,
-    p_text VARCHAR(512) NOT NULL,
-    p_replyid INT Null,
+    r_text VARCHAR(512) NOT NULL,
     a_id INT NOT NULL,
     FOREIGN KEY (p_id) REFERENCES products(p_id) ON DELETE CASCADE,
-    FOREIGN KEY (p_replyid) REFERENCES review(r_id) ON DELETE CASCADE,
     FOREIGN KEY (a_id) REFERENCES account(a_id) ON DELETE CASCADE  
 )
 
